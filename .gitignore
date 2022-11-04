@@ -127,3 +127,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# workspace
+include/
+scripts/
+pyvenv.cfg
+auth.json
+scratch.py
+test.py
