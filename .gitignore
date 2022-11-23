@@ -136,3 +136,4 @@ auth.json
 scratch.py
 test.py
 sample/
+tmp/

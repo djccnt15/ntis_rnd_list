@@ -1,9 +1,8 @@
-addict
-numpy
-pandas
-selenium
 requests
 beautifulsoup4
 fastapi
-pydantic
 uvicorn
+pydantic
+sqlalchemy
+alembic
+APScheduler
