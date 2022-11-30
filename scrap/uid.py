@@ -7,9 +7,9 @@ from scrap.common import *
 class RecordRnd:
     """structure for rnd record"""
 
-    def __init__(self, _serial: int, _uid: int) -> None:
-        self.serial: int = _serial
-        self.uid: int = _uid
+    def __init__(self, serial: int, uid: int) -> None:
+        self.serial: int = serial
+        self.uid: int = uid
 
     def to_dict(self) -> dict:
         data = {
@@ -25,7 +25,7 @@ def cleanse_record(soup: BeautifulSoup) -> RecordRnd:
     scrap: list = soup.find_all('td')
     serial: int = int(drop_whitespace(scrap[1]))
     uid: int = int(soup.find('input')['value'])  # type: ignore
-    return RecordRnd(_serial=serial, _uid=uid)
+    return RecordRnd(serial=serial, uid=uid)
 
 
 def scrapping(
@@ -52,6 +52,7 @@ def total_num() -> int:
     response = requests.get(page_list)
     soup = BeautifulSoup(markup=response.text, features='html.parser')
     return soup.find('input', {'id':'totalCount'})['value']  # type: ignore
+
 
 if __name__ == '__main__':
     import csv

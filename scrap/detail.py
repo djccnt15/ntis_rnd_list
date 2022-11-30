@@ -12,23 +12,23 @@ class DetailRnd:
 
     def __init__(
         self,
-        _title: str,
-        _department: str,
-        _gov_agency: str,
-        _date_notice: date,
-        _budget: str
+        title: str,
+        department: str,
+        gov_agency: str,
+        date_notice: date,
+        budget: str
     ) -> None:
-        self.title = _title
-        self.department = _department
-        self.gov_agency = _gov_agency
-        self.date_notice = _date_notice
-        self.budget = _budget
+        self.title = title
+        self.department = department
+        self.gov_agency = gov_agency
+        self.date_notice = date_notice
+        self.budget = budget
 
     def to_dict(self) -> dict:
         data = {
             'title': self.title,
             'department': self.department,
-            'go_agency': self.gov_agency,
+            'gov_agency': self.gov_agency,
             'date_notice': self.date_notice,
             'budget': self.budget,
         }
@@ -47,11 +47,11 @@ def cleans_detail(soup: BeautifulSoup) -> DetailRnd:
     budget: str = drop_whitespace(soup.find_all('div', {'class': 'summary1'})[1].find_all('li')[1])[5:]
 
     return DetailRnd(
-        _title = title,  # type: ignore
-        _department = department,
-        _gov_agency = gov_agency,
-        _date_notice = date_notice,
-        _budget = budget,
+        title = title,  # type: ignore
+        department = department,
+        gov_agency = gov_agency,
+        date_notice = date_notice,
+        budget = budget,
     )
 
 
