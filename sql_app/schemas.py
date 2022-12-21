@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import datetime
 
 from pydantic import BaseModel
 
@@ -22,7 +22,7 @@ class Detail(BaseModel):
     title: str
     department: str
     gov_agency: str
-    date_notice: date
+    date_notice: datetime
     budget: str
 
     class Config:
@@ -35,3 +35,9 @@ class KeyWord(BaseModel):
     id: int
     detail_id: int
     keyword: str
+
+
+class LogScrap(BaseModel):
+    """record for scrap log"""
+
+    date_scrap: datetime

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from sqlalchemy.orm import Session
 
 from . import models, schemas
@@ -49,3 +51,19 @@ def create_keyword(db: Session, detail: schemas.KeyWord, detail_id: int):
     db.commit()
     db.refresh(db_detail)
     return db_detail
+
+
+def get_log_scrap(db: Session, date_scrap: datetime):
+    return db.query(models.LogScrap).filter(models.LogScrap.date_scrap == date_scrap).first()
+
+
+def get_logs_scrap(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.LogScrap).offset(skip).limit(limit).all()
+
+
+def create_log_scrap(db: Session, date_scrap: schemas.LogScrap):
+    db_date_scrap = models.LogScrap(date_scrap=date_scrap.date_scrap)
+    db.add(db_date_scrap)
+    db.commit()
+    db.refresh(db_date_scrap)
+    return db_date_scrap
