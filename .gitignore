@@ -133,7 +133,6 @@ include/
 scripts/
 pyvenv.cfg
 auth.json
-scratch.py
-test.py
 sample/
 tmp/
+note.py

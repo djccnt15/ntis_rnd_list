@@ -1,28 +1,22 @@
 import time
 from datetime import datetime, date
+from dataclasses import dataclass
 
 import requests
 from bs4 import BeautifulSoup
 
-from scrap.common import *
+from ntis_scrap.common import *
 
 
+@dataclass(frozen=True, order=True, unsafe_hash=True)
 class DetailRnd:
     """structure for detail information of R&D"""
 
-    def __init__(
-        self,
-        title: str,
-        department: str,
-        gov_agency: str,
-        date_notice: date,
-        budget: str
-    ) -> None:
-        self.title = title
-        self.department = department
-        self.gov_agency = gov_agency
-        self.date_notice = date_notice
-        self.budget = budget
+    title: str
+    department: str
+    gov_agency: str
+    date_notice: date
+    budget: str
 
     def to_dict(self) -> dict:
         data = {
@@ -47,11 +41,11 @@ def cleans_detail(soup: BeautifulSoup) -> DetailRnd:
     budget: str = drop_whitespace(soup.find_all('div', {'class': 'summary1'})[1].find_all('li')[1])[5:]
 
     return DetailRnd(
-        title = title,  # type: ignore
-        department = department,
-        gov_agency = gov_agency,
-        date_notice = date_notice,
-        budget = budget,
+        title=title,  # type: ignore
+        department=department,
+        gov_agency=gov_agency,
+        date_notice=date_notice,
+        budget=budget,
     )
 
 
@@ -79,9 +73,7 @@ if __name__ == '__main__':
     }
     mode = mode[args.mode]
 
-    path_tmp = 'tmp'
-    list_name = 'table_uid.csv'
-    list_uid = Path(path_tmp, list_name)
+    list_uid = Path('tmp') / 'table_uid.csv'
 
     if mode == 0:
         with open(file=list_uid, mode='r') as f:

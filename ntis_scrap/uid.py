@@ -1,15 +1,17 @@
+from dataclasses import dataclass
+
 import requests
 from bs4 import BeautifulSoup
 
-from scrap.common import *
+from ntis_scrap.common import *
 
 
+@dataclass(frozen=True, order=True, unsafe_hash=True)
 class RecordRnd:
     """structure for rnd record"""
 
-    def __init__(self, serial: int, uid: int) -> None:
-        self.serial: int = serial
-        self.uid: int = uid
+    serial: int
+    uid: int
 
     def to_dict(self) -> dict:
         data = {
@@ -56,12 +58,13 @@ def total_num() -> int:
 
 if __name__ == '__main__':
     import csv
+    from pathlib import Path
 
     data = scrapping()
     # print(data)
     # print(total_num())
 
-    with open(file='tmp/table_uid.csv', mode='w', newline='') as f:
+    with open(file=Path('tmp') / 'table_uid.csv', mode='w', newline='') as f:
         csv_cols = data[0].keys()
         table_uid = csv.DictWriter(f, csv_cols)
         table_uid.writeheader()
