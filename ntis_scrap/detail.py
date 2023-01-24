@@ -1,6 +1,6 @@
 import time
 from datetime import datetime, date
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 
 import requests
 from bs4 import BeautifulSoup
@@ -18,21 +18,11 @@ class DetailRnd:
     date_notice: date
     budget: str
 
-    def to_dict(self) -> dict:
-        data = {
-            'title': self.title,
-            'department': self.department,
-            'gov_agency': self.gov_agency,
-            'date_notice': self.date_notice,
-            'budget': self.budget,
-        }
-        return data
-
 
 def cleans_detail(soup: BeautifulSoup) -> DetailRnd:
     """get detail information from web scrapping and returns structure of it"""
 
-    title: BeautifulSoup = soup.find('meta', {'property': 'og:description'})['content']  # type: ignore
+    title: str = soup.find('meta', {'property': 'og:description'})['content']  # type: ignore
     gov: BeautifulSoup = soup.find('div', {'class': 'summary1'}).find_all('li')  # type: ignore
     department: str = gov[1].text[6:]  # type: ignore
     gov_agency: str = gov[2].text[8:]  # type: ignore
@@ -41,7 +31,7 @@ def cleans_detail(soup: BeautifulSoup) -> DetailRnd:
     budget: str = drop_whitespace(soup.find_all('div', {'class': 'summary1'})[1].find_all('li')[1])[5:]
 
     return DetailRnd(
-        title=title,  # type: ignore
+        title=title,
         department=department,
         gov_agency=gov_agency,
         date_notice=date_notice,
@@ -55,7 +45,7 @@ def scrapping(uid: int):
     url_scrap: str = f'https://www.ntis.go.kr/rndgate/eg/un/ra/view.do?roRndUid={uid}&flag=rndList'
     response = requests.get(url=url_scrap)
     soup = BeautifulSoup(markup=response.text, features='html.parser')
-    return cleans_detail(soup=soup).to_dict()
+    return asdict(cleans_detail(soup=soup))
 
 
 if __name__ == '__main__':
@@ -70,8 +60,7 @@ if __name__ == '__main__':
     mode = {
         'scratch': 0,
         'scrap': 1,
-    }
-    mode = mode[args.mode]
+    }[args.mode]
 
     list_uid = Path('tmp') / 'table_uid.csv'
 

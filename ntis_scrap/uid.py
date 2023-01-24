@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 
 import requests
 from bs4 import BeautifulSoup
@@ -12,13 +12,6 @@ class RecordRnd:
 
     serial: int
     uid: int
-
-    def to_dict(self) -> dict:
-        data = {
-            'serial': self.serial,
-            'uid': self.uid,
-        }
-        return data
 
 
 def cleanse_record(soup: BeautifulSoup) -> RecordRnd:
@@ -46,7 +39,7 @@ def scrapping(
     )
     soup = BeautifulSoup(markup=response.text, features='html.parser')
     records = soup.find_all('tbody')[3].find_all('tr')
-    return [cleanse_record(i).to_dict() for i in records]
+    return [asdict(cleanse_record(i)) for i in records]
 
 
 def total_num() -> int:
