@@ -8,4 +8,4 @@
     - API 데이터가 공고에 대한 데이터가 아닌 과제 메타 정보 검색용이라 취소
 0. RSS Feed를 통한 데이터 수집
     - 데이터가 대체로 일치하지만 완벽히 일치하지 않아 취소
-0. Selenium, requests, Beautifulsoup를 이용한 직접 스크래핑(현재)
+0. ~~Selenium,~~ requests, Beautifulsoup를 이용한 직접 스크래핑(현재)

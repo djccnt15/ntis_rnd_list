@@ -20,7 +20,7 @@ class DetailRnd:
 
 
 def cleans_detail(soup: BeautifulSoup) -> DetailRnd:
-    """get detail information from web scrapping and returns structure of it"""
+    """get detail information from web scraping and returns structure of it"""
 
     title: str = soup.find('meta', {'property': 'og:description'})['content']  # type: ignore
     gov: BeautifulSoup = soup.find('div', {'class': 'summary1'}).find_all('li')  # type: ignore
@@ -39,7 +39,7 @@ def cleans_detail(soup: BeautifulSoup) -> DetailRnd:
     )
 
 
-def scrapping(uid: int):
+def scraping(uid: int):
     """scrap web data and returns cleansed data"""
 
     url_scrap: str = f'https://www.ntis.go.kr/rndgate/eg/un/ra/view.do?roRndUid={uid}&flag=rndList'
@@ -67,7 +67,7 @@ if __name__ == '__main__':
     if mode == 0:
         with open(file=list_uid, mode='r') as f:
             uid = list(csv.reader(f))[1][1]
-        res = scrapping(uid=uid)  # type: ignore
+        res = scraping(uid=uid)  # type: ignore
         print(res)
 
     elif mode == 1:
@@ -76,7 +76,7 @@ if __name__ == '__main__':
 
         for i, u in enumerate(uid):
             if i > 0:
-                print(scrapping(uid=u[1]))  # type: ignore
+                print(scraping(uid=u[1]))  # type: ignore
                 time.sleep(1)
             else: pass
 

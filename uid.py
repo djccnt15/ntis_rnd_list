@@ -23,7 +23,7 @@ def cleanse_record(soup: BeautifulSoup) -> RecordRnd:
     return RecordRnd(serial=serial, uid=uid)
 
 
-def scrapping(
+def scraping(
     page_list: str = 'https://www.ntis.go.kr/rndgate/eg/un/ra/mng.do',
     paginate: int = 100,
     pageid: int = 1
@@ -53,7 +53,7 @@ if __name__ == '__main__':
     import csv
     from pathlib import Path
 
-    data = scrapping()
+    data = scraping()
     # print(data)
     # print(total_num())
 
@@ -61,4 +61,5 @@ if __name__ == '__main__':
         csv_cols = data[0].keys()
         table_uid = csv.DictWriter(f, csv_cols)
         table_uid.writeheader()
-        [table_uid.writerow(i) for i in data]
+        for i in data:
+            table_uid.writerow(i)
