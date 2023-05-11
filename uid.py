@@ -3,7 +3,7 @@ from dataclasses import dataclass, asdict
 import requests
 from bs4 import BeautifulSoup
 
-from ntis_scrap.common import *
+from common import *
 
 
 @dataclass(frozen=True, order=True, unsafe_hash=True)
